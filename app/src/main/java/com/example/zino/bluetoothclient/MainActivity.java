@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     ListView listView;
-    ArrayAdapter<String> adapter;
+    ListAdapter adapter;
     ArrayList<String> list=new ArrayList<String>();
 
     BluetoothAdapter bluetoothAdapter;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listView);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+        adapter = new ListAdapter(this);
         listView.setAdapter(adapter);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -73,8 +73,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //쓰레드 생성하여 서버와 접속하자!!
-        //ConnectThread connectThread = new ConnectThread(bluetoothAdapter, );
+        //쓰레드 생성하여 서버와 접속하자!
+        BluetoothDevice bluetoothDevice=(BluetoothDevice) adapter.getItem(i);
+        ConnectThread connectThread = new ConnectThread(bluetoothAdapter,bluetoothDevice);
 
     }
 }
